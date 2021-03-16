@@ -1,4 +1,4 @@
-const User=require('../models/users.js');
+const User=require('../models/users');
 module.exports.profile=function(req,res){
 	if(req.cookies.user_id){
 		User.findById(req.cookies.user_id,function(err,user){
@@ -49,5 +49,5 @@ module.exports.create=function(req,res){
 	}
 		)}
 module.exports.createSession=function(req,res){
-
+		return res.redirect('/');
 }
