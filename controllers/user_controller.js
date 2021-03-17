@@ -1,20 +1,16 @@
 const User=require('../models/users');
 module.exports.profile=function(req,res){
-	if(req.cookies.user_id){
-		User.findById(req.cookies.user_id,function(err,user){
-			if(user){
+	
 				return res.render('user_profile',{
 					title:"user profile",
-					user:user
-				})
-			}
-		})
-	}else{
-		return res.redirect('users/sign-in');
-	}
+					// user:user
+})
 }
 // render the sign Up page
 module.exports.signUp=function(req,res){
+	if(req.isAuthenticated()){
+			 res.redirect('/users/profile');
+	}
 	return res.render('sign_up',{
 		title:'Conecto Sign Up'
 	})
@@ -22,6 +18,9 @@ module.exports.signUp=function(req,res){
 
 // render the sign Up page
 module.exports.signIn=function(req,res){
+	if(req.isAuthenticated()){
+		 res.redirect('/users/profile');
+	}
 	return res.render('sign_in',{
 		title:'Conecto Sign In'
 	})
@@ -49,5 +48,10 @@ module.exports.create=function(req,res){
 	}
 		)}
 module.exports.createSession=function(req,res){
+		return res.redirect('/');
+}
+
+module.exports.distroySession=function(req,res){
+		req.logout();
 		return res.redirect('/');
 }

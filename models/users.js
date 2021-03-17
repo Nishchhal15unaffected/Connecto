@@ -1,6 +1,7 @@
 const mongoose=require('mongoose');
 mongoose.connect('mongodb://localhost/conecto');
 const db=mongoose.connection;
+
 const SignUp=new mongoose.Schema({
 	email:{
 		type:String,
@@ -20,3 +21,4 @@ const SignUp=new mongoose.Schema({
 const User=mongoose.model('User',SignUp);
 
 module.exports=User;
+// module.exports=db;
