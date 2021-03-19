@@ -1,0 +1,11 @@
+body {
+  margin: 0;
+  /* text-align: center; */ }
+  body #header {
+    background-color: #242582;
+    color: white; }
+    body #header a {
+      color: red;
+      text-decoration: none; }
+  body #footer {
+    background-color: #242582; }
