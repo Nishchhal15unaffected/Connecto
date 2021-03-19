@@ -8,10 +8,24 @@
 <body>
 	<section id="feed-posts">
 	<h4>Posts</h4>
-	<form action="/post/content" id="new-post-form" method="POST">
+	<form action="/post/create" id="new-post-form" method="POST">
 	<textarea name="content"  cols="30" rows="3" placeholder="type hare"></textarea>
 	<input type="submit" value="Post" />
 	</form>
+	<div id="posts-list-container">
+	<ul>
+	<% for(post of posts){ %>
+		<p>
+		<li>
+		<%= post.user.name%>
+		</li> 
+		<li>
+		<%= post.content%>
+		</li>
+		</p>
+		<% } %>
+	</ul>
+	</div>
 	</section>
 </body>
 </html>
