@@ -1,31 +1,85 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>
-		<%=title%>
-	</title>
-</head>
-<body>
-	<section id="feed-posts">
-	<h4>Posts</h4>
-	<form action="/post/create" id="new-post-form" method="POST">
-	<textarea name="content"  cols="30" rows="3" placeholder="type hare"></textarea>
-	<input type="submit" value="Post" />
-	</form>
-	<div id="posts-list-container">
-	<ul>
-	<% for(post of posts){ %>
-		<p>
-		<li>
-		<%= post.user.name%>
-		</li> 
-		<li>
-		<%= post.content%>
-		</li>
-		</p>
-		<% } %>
-	</ul>
-	</div>
-	</section>
-</body>
-</html>
+<link rel="stylesheet" type="text/css" href="css/home.css">
+<h1>
+    Conecto / <%= title %>
+</h1>
+
+<div id="home-container">
+        
+        <section id="feed-posts">
+    <h4>Posts</h4>
+    <% if(locals.user){ %>
+    <form action="/post/create" id="new-post-form" method="POST">
+        <textarea name="content" cols="30" rows="3" placeholder="Ask Your Quetion..." required></textarea>
+        <input type="submit" value="Ask">
+    </form>
+    <% } %>
+
+   <div id="posts-list-container">
+        <ul>
+            <% for(let post of posts){ %>
+            <li>
+                <p>
+                <%if(locals.user && locals.user.id==post.user.id){%>
+                <small>
+                <a href="/post/distroy/<%= post.id%>" id="delete-post-button">X</a>
+                </small>   
+                <%}%> 
+                    <%= post.content %>
+                    <br>
+                    <small>
+                        <%= post.user.name %>
+                    </small>
+                </p>
+                <div class="post-comments-<%= post._id %>">
+                    <% if (locals.user){ %>
+                        <form action="/comments/create" method="POST" id="new-comment-form">
+                            <input type="text" name="content" placeholder="Type your answer" required>
+                            <input type="hidden" name="post" value="<%= post._id %>" >
+                            <input type="submit" value="Reply answer">
+                        </form>
+
+                    <% } %>
+                     <div class="post-comments-list">
+                        <ul id="post-comments-<%= post._id %>">
+
+                            <% for (comment of post.comments){%>
+                                
+                            <p>
+ 
+                            <%if(locals.user && locals.user.id==comment.user.id){%>
+                             
+                <small>
+                <a href="/comments/distroy/<%= comment.id%>>X</a>
+                </small>  
+                <%}%>
+                                <%= comment.content %>
+                                <br>
+                                <small>
+                                    <%= comment.user.name %>
+                                </small>
+                            </p>    
+                            <%} %>
+                        </ul>
+                    </div>
+                   
+                </div>
+                
+            </li>
+                
+            <%} %>
+        </ul>
+    </div>
+</section>
+
+<section id="user-friends">
+    <h4>Friends</h4>
+    <% for(u of all_users){%>
+        <p>
+            <a href="/users/profile/<%=u.id%>"><%=u.name%></a>
+        </p>
+        <%}%>
+</section>
+
+</div>
+<script src="/js/home_post_comment.js"></script>
+<script src="/js/home_posts.js"></script>

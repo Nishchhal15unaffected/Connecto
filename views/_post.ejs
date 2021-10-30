@@ -1,0 +1,16 @@
+ <li>
+                <p>
+                <%if(locals.user && locals.user.id==post.user.id){%>
+                <small>
+                <a href="/post/distroy/<%= post.id%>">X</a>
+                </small>   
+                <%}%> 
+                    <%= post.content %>
+                    <br>
+                    <small>
+                        <%= post.user.name %>
+                    </small>
+                </p>
+                
+            </li>
+            <%-include-%>
